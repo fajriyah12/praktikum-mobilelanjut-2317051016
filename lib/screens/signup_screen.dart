@@ -34,7 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
           ],
         );
 
-    Widget primaryButton(String label, VoidCallback onTap) =>
+    Widget primaryButton(String label, VoidCallback onTap) => 
         GestureDetector(
           onTap: onTap,
           child: Container(
@@ -156,20 +156,40 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      primaryButton('Continue', () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Sign up success'),
-                          ),
-                        );
-
-                        // lalu pindah ke Sign In
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          LoginScreen.route,
-                          (route) => false,
-                        );
+                      // Primary button sesuai gambar
+                      primaryButton('Sign Up Now', () {
+                        if (_name.text.isEmpty ||
+                            _email.text.isEmpty ||
+                            _pass.text.isEmpty ||
+                            _confirm.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Semua field wajib diisi!'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else if (_pass.text != _confirm.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Password tidak sama!'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Sign up success'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            LoginScreen.route,
+                            (route) => false,
+                          );
+                        }
                       }),
+
                       const SizedBox(height: 12),
 
                       Center(
@@ -177,7 +197,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           onPressed: () => Navigator.pushReplacementNamed(
                               context, LoginScreen.route),
                           child: const Text(
-                            'Sign In',
+                            'Already have an account? Sign In',
                             style: TextStyle(fontSize: 13),
                           ),
                         ),

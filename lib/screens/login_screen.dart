@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup_screen.dart';
+import 'dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = '/signin';
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         );
 
-    // tombol biru dengan gradient (UI-only)
+    // tombol biru dengan gradient + validasi (UI + logic)
     Widget primaryButton(String label, VoidCallback onTap) =>
         GestureDetector(
           onTap: onTap,
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 14),
 
-                // card form (dibangun manual)
+                // card form
                 Container(
                   width: 360,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -149,17 +150,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 6),
 
+                      // 🔑 tombol login dengan validasi
                       primaryButton('Sign In Now', () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Sign In tapped')),
-                        );
+                        if (_email.text.isEmpty || 
+                        _pass.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Email dan Password wajib diisi!'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Login berhasil!'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            DashboardScreen.route,
+                            (route) => false,
+                          );
+                        }
                       }),
                       const SizedBox(height: 14),
 
                       Center(
                         child: TextButton(
-                          onPressed: () => Navigator.pushNamed(context, SignupScreen.route),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, SignupScreen.route),
                           child: const Text(
                             'Create New Account',
                             style: TextStyle(fontSize: 13),
