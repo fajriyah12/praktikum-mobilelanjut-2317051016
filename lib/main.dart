@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/signup_screen.dart';
-import 'screens/dashboard_screen.dart';
+import 'package:myapp/screens/splash_screen.dart';
+import 'package:myapp/screens/login_screen.dart';
+import 'package:myapp/screens/signup_screen.dart';
+import 'package:myapp/screens/dashboard_screen.dart';
 
 void main() {
   runApp(const JustduitApp());
@@ -11,7 +12,7 @@ class JustduitApp extends StatelessWidget {
   const JustduitApp({super.key});
 
   // sementara: misal user sudah login
-  final bool isLoggedIn = false;
+  static const bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class JustduitApp extends StatelessWidget {
         LoginScreen.route: (_) => const LoginScreen(),
         SignupScreen.route: (_) => const SignupScreen(),
         DashboardScreen.route: (_) => const DashboardScreen(),
+        SplashScreen.route: (_) => const SplashScreen(),
       },
     );
   }

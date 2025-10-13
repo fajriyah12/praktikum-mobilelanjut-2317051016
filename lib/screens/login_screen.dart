@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'signup_screen.dart';
-import 'dashboard_screen.dart';
+import 'package:myapp/screens/signup_screen.dart';
+import 'package:myapp/screens/splash_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = '/signin';
@@ -25,43 +25,41 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // komponen kecil buat label + tanda *
     Widget requiredLabel(String text) => Row(
-          children: [
-            Text(text, style: const TextStyle(fontSize: 13)),
-            const Text('*',
-                style: TextStyle(color: Colors.red, fontSize: 13)),
-          ],
-        );
+      children: [
+        Text(text, style: const TextStyle(fontSize: 13)),
+        const Text('*', style: TextStyle(color: Colors.red, fontSize: 13)),
+      ],
+    );
 
     // tombol biru dengan gradient + validasi (UI + logic)
-    Widget primaryButton(String label, VoidCallback onTap) =>
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            width: double.infinity,
-            height: 46,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28),
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1E88FF), Color(0xFF207DFF)],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF1E88FF).withOpacity(0.25),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+    Widget primaryButton(String label, VoidCallback onTap) => GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 46,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(28),
+          gradient: const LinearGradient(
+            colors: [Color(0xFF1E88FF), Color(0xFF207DFF)],
           ),
-        );
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF1E88FF).withOpacity(0.25),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -139,8 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero),
+                          style: TextButton.styleFrom(padding: EdgeInsets.zero),
                           onPressed: () {},
                           child: const Text(
                             'Forgot Password',
@@ -152,8 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // 🔑 tombol login dengan validasi
                       primaryButton('Sign In Now', () {
-                        if (_email.text.isEmpty || 
-                        _pass.text.isEmpty) {
+                        if (_email.text.isEmpty || _pass.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Email dan Password wajib diisi!'),
@@ -167,11 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               backgroundColor: Colors.green,
                             ),
                           );
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            DashboardScreen.route,
-                            (route) => false,
-                          );
+                          Future.delayed(const Duration(seconds: 5), () {
+                          Navigator.pushReplacementNamed(context, SplashScreen.route);
+                           });
                         }
                       }),
                       const SizedBox(height: 14),
